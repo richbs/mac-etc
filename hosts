@@ -6,6 +6,7 @@
 ##
 127.0.0.1	localhost
 127.0.0.1       air.dev www.air.dev
+127.0.0.1       tate.dev www.tate.dev drupal.gallery.tate.dev
 255.255.255.255	broadcasthost
 ::1             localhost 
 fe80::1%lo0	localhost
