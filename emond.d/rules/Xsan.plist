@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Initialize</string>
+		<key>loadVariablesFromFile</key>
+		<string>/Library/Preferences/Xsan/notifications3.plist</string>
+		<key>comment</key>
+		<string>Set the SAN name and recipients at startup</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>startup</string>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Daily</string>
+		<key>comment</key>
+		<string>Daily housekeeping</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>periodic.daily.midnight</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>RunCommand</string>
+				<key>command</key>
+				<string>/System/Library/Filesystems/acfs.fs/Contents/bin/xsandaily</string>
+				<key>user</key>
+				<string>root</string>
+				<key>group</key>
+				<string>wheel</string>
+				<key>arguments</key>
+				<array/>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Test</string>
+		<key>comment</key>
+		<string>Send test message using given config</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.testNotification</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>Please do not be alarmed. This is only a test for SAN ${event:SANName}.</string>
+				<key>subject</key>
+				<string>${event:SANName}: Test notification</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>relayHost</key>
+				<string>${event:relayHost}</string>
+				<key>adminEmail</key>
+				<string>${event:adminEmail}</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${event:emailRecipients}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>Please do not be alarmed. This is only a test for SAN ${event:SANName}.</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>relayHost</key>
+				<string>${event:relayHost}</string>
+				<key>adminEmail</key>
+				<string>${event:adminEmail}</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${event:smsRecipients}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Restart</string>
+		<key>comment</key>
+		<string>fsm restarted</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.volRestart</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>Volume ${event:Volume} in SAN ${SANName} has failed over.  It is now being hosted by ${builtin:hostName}.</string>
+				<key>subject</key>
+				<string>${SANName}: Volume ${event:Volume} has failed over</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${emailRecipientsFailover}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>Volume ${event:Volume} in SAN ${SANName} has failed over.  It is now being hosted by ${builtin:hostName}.</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${smsRecipientsFailover}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>User Quota</string>
+		<key>comment</key>
+		<string>User went/is over-quota</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.overQuota.user</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>User ${event:name} is above their soft quota on volume ${event:Volume} in SAN ${SANName}.</string>
+				<key>subject</key>
+				<string>${SANName}: ${event:name} is above quota</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${emailRecipientsUserQuota}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>User ${event:name} is above their soft quota on volume ${event:Volume} in SAN ${SANName}.</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${smsRecipientsUserQuota}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Group Quota</string>
+		<key>comment</key>
+		<string>Group went/is over-quota</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.overQuota.group</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>Group ${event:name} is above their soft quota on volume ${event:Volume} in SAN ${SANName}.</string>
+				<key>subject</key>
+				<string>${SANName}: ${event:name} is above quota</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${emailRecipientsGroupQuota}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>Group ${event:name} is above their soft quota on volume ${event:Volume} in SAN ${SANName}.</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${smsRecipientsGroupQuota}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Free space</string>
+		<key>comment</key>
+		<string>Check if volume is over free-space minimum</string>
+		<key>enabled</key>
+		<true/>
+		<key>criterion</key>
+		<array>
+			<dict>
+				<key>operator</key>
+				<string>GreaterThan</string>
+				<key>operands</key>
+				<array>
+					<string>${FreeSpaceThreshold}</string>
+					<string>${event:Percentage}</string>
+				</array>
+			</dict>
+		</array>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.volFreespace</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>Volume ${event:Volume} in SAN ${SANName} has less than ${FreeSpaceThreshold}% available space.</string>
+				<key>subject</key>
+				<string>${SANName}: ${event:Volume} low on space</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${emailRecipientsFreeSpace}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>Volume ${event:Volume} in SAN ${SANName} has less than ${FreeSpaceThreshold}% available space.</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${smsRecipientsFreeSpace}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Fibre Events</string>
+		<key>comment</key>
+		<string>Send message about FC events</string>
+		<key>enabled</key>
+		<true/>
+		<key>eventTypes</key>
+		<array>
+			<string>com.apple.xsan.fibreEvents</string>
+		</array>
+		<key>actions</key>
+		<array>
+			<dict>
+				<key>type</key>
+				<string>SendEmail</string>
+				<key>message</key>
+				<string>Fibre channel activity and failures: 
+${event:message}</string>
+				<key>subject</key>
+				<string>${SANName}: Fibre Channel activity log for ${builtin:hostName}</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${emailRecipientsFibre}</string>
+				</array>
+			</dict>
+			<dict>
+				<key>type</key>
+				<string>SendSMS</string>
+				<key>message</key>
+				<string>Fibre channel activity and failures: 
+${event:message}</string>
+				<key>localizationBundlePath</key>
+				<string>/usr/libexec/xsanmgr/bundles/xsanmgr_xsan.bundle</string>
+				<key>recipientAddresses</key>
+				<array>
+					<string>${smsRecipientsFibre}</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

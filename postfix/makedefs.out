@@ -1,0 +1,15 @@
+# Do not edit -- this file documents how Postfix was built for your machine.
+SYSTYPE	= MACOSX
+AR	= ar
+ARFL	= rv
+RANLIB	= ranlib
+SYSLIBS	= -L/usr/lib -lssl -lsasl2.2.0.1 -lgssapi_krb5 -lldap -L/usr/lib -lpcre -flat_namespace
+CC	= cc -DBIND_8_COMPAT -DNO_NETINFO -DRESOLVE_H_NEEDS_ARPA_NAMESER_COMPAT_H -DNO_KQUEUE -DHAS_PCRE -I/usr/local/include
+OPT	= -DNO_NETINFO -DUSE_TLS -DUSE_CYRUS_SASL -DUSE_SASL_AUTH -D__APPLE_OS_X_SERVER__ 		-DEVENTS_STYLE=EVENTS_STYLE_KQUEUE 		-DHAS_DEV_URANDOM -DUSE_SYSV_POLL -DHAS_PCRE -DHAS_LDAP 		-I/usr/include 		-I/usr/include/sasl 		-I/usr/local/include 		-F/System/Library/Frameworks 		-F/System/Library/PrivateFrameworks 		-g -Os -arch x86_64 -pipe
+DEBUG	= -g
+AWK	= awk
+STRCASE = 
+EXPORT	= AUXLIBS='-L/usr/lib -lssl -lsasl2.2.0.1 -lgssapi_krb5 -lldap -L/usr/lib -lpcre' CCARGS=' -DBIND_8_COMPAT -DNO_NETINFO -DRESOLVE_H_NEEDS_ARPA_NAMESER_COMPAT_H -DNO_KQUEUE -DHAS_PCRE -I/usr/local/include' OPT='-DNO_NETINFO -DUSE_TLS -DUSE_CYRUS_SASL -DUSE_SASL_AUTH -D__APPLE_OS_X_SERVER__ 		-DEVENTS_STYLE=EVENTS_STYLE_KQUEUE 		-DHAS_DEV_URANDOM -DUSE_SYSV_POLL -DHAS_PCRE -DHAS_LDAP 		-I/usr/include 		-I/usr/include/sasl 		-I/usr/local/include 		-F/System/Library/Frameworks 		-F/System/Library/PrivateFrameworks 		-g -Os -arch x86_64 -pipe' DEBUG='-g'
+WARN	= -Wall -Wno-comment -Wformat -Wimplicit -Wmissing-prototypes \
+	-Wparentheses -Wstrict-prototypes -Wswitch -Wuninitialized \
+	-Wunused -Wno-missing-braces

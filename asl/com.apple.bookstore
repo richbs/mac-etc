@@ -1,0 +1,3 @@
+# Facility com.apple.bookstore gets saved only in /var/log/bookstore.log
+? [= Facility com.apple.bookstore] claim only
+* file /var/log/bookstore.log mode=0640 rotate=seq compress file_max=50M all_max=100M

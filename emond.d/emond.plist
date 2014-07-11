@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>config</key>
+	<dict>
+		<key>additionalRulesPaths</key>
+		<array/>
+		<key>debugLevel</key>
+		<integer>0</integer>
+		<key>filterByUID</key>
+		<string>0</string>
+		<key>filterByGID</key>
+		<string></string>
+		<key>periodicEvents</key>
+		<array>
+			<dict>
+				<key>eventType</key>
+				<string>periodic.daily.midnight</string>
+				<key>startTime</key>
+				<string>0</string>
+			</dict>
+		</array>
+		<key>errorLogPath</key>
+		<string>/Library/Logs/EventMonitor/EventMonitor.error.log</string>
+		<key>eventLogPath</key>
+		<string>/Library/Logs/EventMonitor/EventMonitor.event.log</string>
+		<key>logEvents</key>
+		<false/>
+		<key>saveState</key>
+		<true/>
+	</dict>
+	<key>initialGlobals</key>
+	<dict>
+		<key>notificationContacts</key>
+		<array/>
+	</dict>
+</dict>
+</plist>

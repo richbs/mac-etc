@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# $P4: //depot/projects/trustedbsd/openbsm/etc/audit_warn#3 $
+#
+# command-line arguments are in the form:
+#  <warning type>  [optional argument] [optional flags]
+#
+# where the warning type may be:
+#
+# allhard	All audit trail volumes are over the hard limit.
+# allsoft	All audit trail volumes are over the soft limit.
+# auditoff	Auditing has been disabled by someone other than auditd.
+# closefile	The given trail file has been closed so it is now safe
+#		to post-proccess.
+# ebusy		The auditd is already running.
+# getacdir	The audit trail directory couldn't be parsed from audit_control.
+# hardlimit	The given trail volume is over the hard limit.
+# nostart	Auditing could not be started.
+# postsigterm	There was a problem shutting down auditd.
+# soft		The given trail volume is over the soft limit.
+# tmpfile	The temporary audit trail file already exist.
+# expired	The given trail file expired and was removed.
+#
+# and where the optional flags may be:
+#
+# --will-sleep	The system is planning to go to sleep.
+
+argument=""
+willsleep=0
+type=$1
+shift
+
+while [ $# -ge 1 ]; do
+	case $1 in
+	--will-sleep) willsleep=1 ;;
+	*) argument=$1 ;;
+	esac
+	shift
+done
+
+# Don't log audit warning events when the system is about to sleep.
+if [ $willsleep -eq 0 ]; then
+	logger -p security.warning "audit warning: $type $argument"
+fi

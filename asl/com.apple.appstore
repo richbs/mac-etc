@@ -1,0 +1,3 @@
+# Facility com.apple.appstore gets saved only in /var/log/appstore.log
+? [= Facility com.apple.appstore] claim only
+* file /var/log/appstore.log mode=0640 rotate=seq compress file_max=50M all_max=100M
